@@ -1,0 +1,33 @@
+headsup.headsup_list_controller_list:
+  path: '/headsup-list'
+  defaults:
+    _title_callback: '\Drupal\headsup\Controller\HeadsupListController::title'
+    _controller: '\Drupal\headsup\Controller\HeadsupListController::list'
+  requirements:
+    _permission: 'view headsup messages'
+
+headsup.headsup_acknowedge:
+  path: '/headsup/acknowledge/{nid}/{uid}'
+  defaults:
+    _controller: 'Drupal\headsup\Controller\HeadsupAcknowledgeController::getAcknowledgeParameters'
+    _title: 'Heads-up Acknowledgement.'
+  # methods:  [GET]
+  requirements:
+    _permission: 'view headsup messages'
+  options:
+    no_cache: 'TRUE'
+    parameters:
+      nid:
+        type: entity:node
+      uid:
+        type: entity:user
+
+headsup.headsup_settings_form:
+  path: 'admin/config/user-interface/headsup-settings'
+  defaults:
+    _form: '\Drupal\headsup\Form\HeadsupSettingsForm'
+    _title: 'Headsup Settings Form'
+  requirements:
+    _permission: 'access headsup administration page'
+  options:
+    _admin_route: TRUE

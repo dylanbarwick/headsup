@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the headsup module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * @see hook_install()
+ */
+function headsup_install() {
+  // Set default values for config which require dynamic values.
+  \Drupal::configFactory()->getEditable('headsup.headsupsettings')
+    ->set('headsup_list_page_title', 'Heads-up messages')
+    ->save();
+
+  \Drupal::configFactory()->getEditable('headsup.headsupsettings')
+    ->set('headsup_readmore_label', 'Read more')
+    ->save();
+
+  \Drupal::configFactory()->getEditable('headsup.headsupsettings')
+    ->set('headsup_readless_label', 'Read less')
+    ->save();
+
+  \Drupal::configFactory()->getEditable('headsup.headsupsettings')
+    ->set('headsup_acknowledge_label', 'I acknowledge')
+    ->save();
+
+  // Insert some example data into our schema.
+  $entries = [
+    [
+      'nid' => -1,
+      'uid' => -1,
+      'date' => time(),
+    ],
+    [
+      'nid' => -2,
+      'uid' => -2,
+      'date' => time(),
+    ],
+  ];
+
+  $connection = \Drupal::database();
+  foreach ($entries as $entry) {
+    $connection->insert('headsup_acknowledgements')->fields($entry)->execute();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * All nodes of type `opsbulletin` will be deleted, followed closely by
+ * the content type itself. Scorched earth.
+ */
+function headsup_uninstall() {
+  // Delete all nodes of given content type.
+  $storage_handler = \Drupal::entityTypeManager()
+    ->getStorage('node');
+  $nodes = $storage_handler->loadByProperties(['type' => 'headsup']);
+  $storage_handler->delete($nodes);
+
+  // Delete content type.
+  $content_type = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->load('headsup');
+  $content_type->delete();
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ */
+function headsup_schema() {
+  $schema['headsup_acknowledgements'] = [
+    'description' => 'Links the nodes and the users to form a record of who acknowledged which heads-up and when.',
+    'fields' => [
+      'nid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Node id of the heads-up in question",
+      ],
+      'uid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "User's {users}.uid",
+      ],
+      'date' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp of when the heads-up was acknowledged.',
+      ],
+    ],
+    'primary key' => ['nid', 'uid'],
+  ];
+
+  return $schema;
+}

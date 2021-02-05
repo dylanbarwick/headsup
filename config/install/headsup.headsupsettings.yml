@@ -1,0 +1,6 @@
+headsup:
+  headsup_list_page_title: "Heads-up messages"
+  headsup_list_pager_limit: "10"
+  headsup_readmore_label: "Read more"
+  headsup_readless_label: "Read less"
+  headsup_acknowledge_label: "I acknowledge"

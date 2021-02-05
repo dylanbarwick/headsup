@@ -1,0 +1,6 @@
+headsup.headsup_settings_form:
+  title: 'Headsup Settings Form'
+  route_name: headsup.headsup_settings_form
+  description: 'Set the default values for heads-up messages.'
+  parent: system.admin_config_ui
+  weight: 99

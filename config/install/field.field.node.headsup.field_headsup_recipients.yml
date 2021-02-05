@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_headsup_recipients
+    - node.type.headsup
+id: node.headsup.field_headsup_recipients
+field_name: field_headsup_recipients
+entity_type: node
+bundle: headsup
+label: 'headsup recipients'
+description: 'Select the roles that should see this headsup. If no roles are selected then everyone will see this headsup.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user_role'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: entity_reference

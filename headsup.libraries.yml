@@ -1,0 +1,11 @@
+headsup-library:
+  css:
+    component:
+      css/headsup.css: {}
+  js:
+    js/headsup.js: {}
+  dependencies:
+    - core/drupal.ajax
+    - core/jquery
+    - core/jquery.once
+    - core/drupal

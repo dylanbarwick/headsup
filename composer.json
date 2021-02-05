@@ -1,0 +1,13 @@
+{
+    "name": "headsup",
+    "type": "drupal-module",
+    "description": "Creates heads-up messages.",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/headsup",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/headsup",
+        "source": "http://cgit.drupalcode.org/headsup",
+    },
+}

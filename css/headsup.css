@@ -1,0 +1,58 @@
+.headsup-carousel-container {
+  width: auto;
+  margin-bottom: 2em;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 1em;
+  border-radius: 0.5em;
+}
+
+.headsup-carousel-container.empty {
+  padding: 0;
+  display: none;
+}
+
+.headsup-title {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.headsup-date {
+  font-style: italic;
+}
+
+.headsup-body {
+  height: 1.3em;
+  overflow: hidden;
+}
+
+.headsup-body p {
+  margin-top: 0;
+}
+
+.headsup-button {
+  background-color: #333333;
+  color: #cccccc;
+  padding: 0.3em 0.8em;
+  border-radius: 0.5em;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.headsup-list-container .headsup-container {
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  border: 2px #eaeaea solid;
+}
+
+.headsup-list-container .headsup-container.acknowledged {
+  background-color: #eaeaea;
+}
+
+.headsup-acknowledgement-status {
+  font-weight: bold;
+  font-style: italic;
+  color: #333333;
+}

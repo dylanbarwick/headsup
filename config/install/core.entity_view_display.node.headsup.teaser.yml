@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.headsup.body
+    - field.field.node.headsup.field_headsup_date
+    - field.field.node.headsup.field_headsup_recipients
+    - node.type.headsup
+  module:
+    - datetime
+    - text
+    - user
+id: node.headsup.teaser
+targetEntityType: node
+bundle: headsup
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 3
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  field_headsup_date:
+    type: datetime_default
+    weight: 2
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+hidden:
+  field_headsup_recipients: true

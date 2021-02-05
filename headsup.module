@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Contains headsup.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function headsup_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the headsup module.
+    case 'help.page.headsup':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Creates and displays heads-up messages.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function headsup_theme() {
+  $config = \Drupal::config('headsup.headsupsettings');
+  return [
+    'headsup' => [
+      'render element' => 'children',
+    ],
+    'headsup_carousel' => [
+      'variables' => [
+        'headsups' => NULL,
+        'readmore' => $config->get('headsup_readmore_label', []),
+      ],
+    ],
+    'headsup_list' => [
+      'variables' => [
+        'headsups' => NULL,
+        'readmore' => $config->get('headsup_readmore_label', []),
+        'pager' => NULL,
+      ],
+    ],
+  ];
+}

@@ -1,0 +1,21 @@
+{%
+  set removedClasses = [
+    'acknowledged',
+    'unacknowledged',
+  ]
+%}
+<div class="headsup-list-container">
+{% for item in headsups %}
+  {% set this_id = 'headsup-' ~ item.nid %}
+  <div{{ attributes.removeClass(removedClasses).addClass('headsup-container', item.acknowledged).setAttribute('id', this_id) }}>
+    <div class="headsup-title">{{ item.title }}</div>
+    <div class="headsup-acknowledgement-status">{{ item.acknowledged }}</div>
+    <div class="headsup-date">{{ item.field_headsup_date }}</div>
+    <div class="headsup-body">
+      {{ item.body|raw }}<br/>
+    </div>
+    <div class="headsup-button headsup-more-button" id="headsup-more-{{ item.nid }}" rel="{{ item.nid }}">{{ readmore }}</div>
+  </div>
+{% endfor %}
+{{ pager }}
+</div>

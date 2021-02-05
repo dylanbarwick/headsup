@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_headsup_date
+    - node.type.headsup
+  module:
+    - datetime
+id: node.headsup.field_headsup_date
+field_name: field_headsup_date
+entity_type: node
+bundle: headsup
+label: 'headsup date'
+description: 'Select the date and time when this headsup should become visible to users.'
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

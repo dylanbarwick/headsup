@@ -1,0 +1,7 @@
+view headsup messages:
+  title: 'View Heads-up messages'
+  description: 'View the headsup block and any related headsup pages.'
+
+access headsup administration page:
+  title: 'Access the heads-up admin page'
+  description: 'Access the heads-up admin page and edit configurations.'
