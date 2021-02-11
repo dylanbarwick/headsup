@@ -94,12 +94,12 @@ class HeadsupBlock extends BlockBase implements ContainerFactoryPluginInterface 
 
     // Extract the necessary fields of each headsup and build an array of each.
     foreach ($headsups as $key => $value) {
-      $fh_date = strtotime($value->get('field_headsup_date')->value);
+      $fh_start_date = strtotime($value->get('field_headsup_start_date')->value);
       $render_headsups[$key] = [
         'nid' => $key,
         'title' => $value->title->value,
         'body' => $value->body->value,
-        'field_headsup_date' => \Drupal::service('date.formatter')->format($fh_date, 'short'),
+        'field_headsup_start_date' => \Drupal::service('date.formatter')->format($fh_start_date, 'short'),
         'this_link' => [
           '#type' => 'link',
           '#title' => $headsup_acknowledge_label,

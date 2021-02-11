@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_headsup_date
+    - field.storage.node.field_headsup_start_date
     - node.type.headsup
   module:
     - datetime
-id: node.headsup.field_headsup_date
-field_name: field_headsup_date
+id: node.headsup.field_headsup_start_date
+field_name: field_headsup_start_date
 entity_type: node
 bundle: headsup
-label: 'headsup date'
+label: 'Headsup start date'
 description: 'Select the date and time when this headsup should become visible to users.'
-required: false
+required: true
 translatable: false
 default_value:
   -

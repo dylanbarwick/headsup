@@ -3,8 +3,9 @@ status: true
 dependencies:
   config:
     - field.field.node.headsup.body
-    - field.field.node.headsup.field_headsup_date
     - field.field.node.headsup.field_headsup_recipients
+    - field.field.node.headsup.field_headsup_start_date
+    - field.field.node.headsup.field_headsup_stop_date
     - node.type.headsup
   module:
     - datetime
@@ -18,18 +19,28 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 1
+    weight: 2
     settings: {  }
     third_party_settings: {  }
-  field_headsup_date:
-    type: datetime_default
+    region: content
+  field_headsup_start_date:
     weight: 0
     label: above
     settings:
       format_type: medium
       timezone_override: ''
     third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_headsup_stop_date:
+    weight: 1
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
 hidden:
   field_headsup_recipients: true
-  langcode: true
   links: true

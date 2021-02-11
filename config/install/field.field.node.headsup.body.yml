@@ -1,11 +1,11 @@
 langcode: en
 status: true
 dependencies:
-    config:
-        - field.storage.node.body
-        - node.type.headsup
-    module:
-        - text
+  config:
+    - field.storage.node.body
+    - node.type.headsup
+  module:
+    - text
 id: node.headsup.body
 field_name: body
 entity_type: node
@@ -17,5 +17,6 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-    display_summary: true
+  display_summary: true
+  required_summary: false
 field_type: text_with_summary

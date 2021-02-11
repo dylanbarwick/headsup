@@ -4,8 +4,8 @@ dependencies:
   module:
     - datetime
     - node
-id: node.field_headsup_date
-field_name: field_headsup_date
+id: node.field_headsup_start_date
+field_name: field_headsup_start_date
 entity_type: node
 type: datetime
 settings:

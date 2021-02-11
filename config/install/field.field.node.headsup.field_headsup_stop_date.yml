@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_headsup_stop_date
+    - node.type.headsup
+  module:
+    - datetime
+id: node.headsup.field_headsup_stop_date
+field_name: field_headsup_stop_date
+entity_type: node
+bundle: headsup
+label: 'Headsup stop date'
+description: 'If you want a heads-up notice to have a limited lifespan then enter the stop date here. If left blank then the heads-up notice will persist until it is acknowledged.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

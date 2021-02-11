@@ -162,7 +162,8 @@ class HeadsupRepository {
     $query = $database->select('node', 'n');
     // Join the two other databases.
     $query->leftJoin('node__field_headsup_recipients', 'nbr', 'n.nid = nbr.entity_id');
-    $query->leftJoin('node__field_headsup_date', 'nbd', 'n.nid = nbd.entity_id');
+    $query->leftJoin('node__field_headsup_start_date', 'nbd', 'n.nid = nbd.entity_id');
+    $query->leftJoin('node__field_headsup_stop_date', 'nbds', 'n.nid = nbds.entity_id');
     $query->leftJoin('headsup_acknowledgements', 'poa', 'n.nid = poa.nid AND poa.uid = :current_user_id', [':current_user_id' => $user->id()]);
 
     // Only bring back headsup nodes.
@@ -185,10 +186,17 @@ class HeadsupRepository {
     $query->isNull('poa.nid');
 
     // Exclude any headsups dated from before the current user was created.
-    $query->condition('nbd.field_headsup_date_value', date('Y-m-d\TH:i:s', $user->getCreatedTime()), '>');
+    $query->condition('nbd.field_headsup_start_date_value', date('Y-m-d\TH:i:s', $user->getCreatedTime()), '>');
 
     // Exclude any headsups dated in the future.
-    $query->condition('nbd.field_headsup_date_value', date('Y-m-d\TH:i:s'), '<');
+    $query->condition('nbd.field_headsup_start_date_value', date('Y-m-d\TH:i:s'), '<');
+
+    // Another or group to stop `expired` heads-ups from being shown.
+    $orExpiredGroup = $query->orConditionGroup()
+      ->condition('nbds.field_headsup_stop_date_value', date('Y-m-d\TH:i:s'), '>')
+      ->isNull('nbds.field_headsup_stop_date_value');
+
+    $query->condition($orExpiredGroup);
 
     // Return the result in object format.
     $result = $query->execute()->fetchAll(\PDO::FETCH_ASSOC);
@@ -257,7 +265,7 @@ class HeadsupRepository {
     $query = $database->select('node', 'n');
     // Join the two other databases.
     $query->leftJoin('node__field_headsup_recipients', 'nbr', 'n.nid = nbr.entity_id');
-    $query->leftJoin('node__field_headsup_date', 'nbd', 'n.nid = nbd.entity_id');
+    $query->leftJoin('node__field_headsup_start_date', 'nbd', 'n.nid = nbd.entity_id');
     $query->leftJoin('headsup_acknowledgements', 'poa', 'n.nid = poa.nid AND poa.uid = :current_user_id', [':current_user_id' => $user->id()]);
 
     // Only bring back headsup nodes.
@@ -277,10 +285,10 @@ class HeadsupRepository {
     $query->condition($orGroup);
 
     // Exclude any headsups dated from before the current user was created.
-    $query->condition('nbd.field_headsup_date_value', date('Y-m-d\TH:i:s', $user->getCreatedTime()), '>');
+    $query->condition('nbd.field_headsup_start_date_value', date('Y-m-d\TH:i:s', $user->getCreatedTime()), '>');
 
     // Exclude any headsups dated in the future.
-    $query->condition('nbd.field_headsup_date_value', date('Y-m-d\TH:i:s'), '<');
+    $query->condition('nbd.field_headsup_start_date_value', date('Y-m-d\TH:i:s'), '<');
 
     // Tack a pager thing on the end.
     $pager = $query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit($this->config->get('headsup_list_pager_limit'));
@@ -298,12 +306,12 @@ class HeadsupRepository {
       $nodes = Node::loadMultiple($nids);
 
       foreach ($nodes as $nkey => $nvalue) {
-        $fh_date = strtotime($nvalue->get('field_headsup_date')->value);
+        $fh_start_date = strtotime($nvalue->get('field_headsup_start_date')->value);
         $returned_headsups[$nkey] = [
           'nid' => $nkey,
           'title' => $nvalue->title->value,
           'body' => $nvalue->body->value,
-          'field_headsup_date' => \Drupal::service('date.formatter')->format($fh_date, 'short'),
+          'field_headsup_start_date' => \Drupal::service('date.formatter')->format($fh_start_date, 'short'),
           'acknowledged' => 'unacknowledged',
         ];
       }

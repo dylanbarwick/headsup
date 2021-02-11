@@ -17,6 +17,10 @@ function headsup_install() {
     ->save();
 
   \Drupal::configFactory()->getEditable('headsup.headsupsettings')
+    ->set('headsup_list_pager_limit', '10')
+    ->save();
+
+  \Drupal::configFactory()->getEditable('headsup.headsupsettings')
     ->set('headsup_readmore_label', 'Read more')
     ->save();
 

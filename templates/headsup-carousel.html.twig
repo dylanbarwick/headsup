@@ -29,7 +29,7 @@
 {% for item in headsups %}
   <div class="headsup-container" id="headsup-{{ item.nid }}">
     <div class="headsup-title">{{ item.title }}</div>
-    <div class="headsup-date">{{ item.field_headsup_date }}</div>
+    <div class="headsup-date">{{ item.field_headsup_start_date }}</div>
     <div class="headsup-body">
       {{ item.body|raw }}<br/>
       {{ item.this_link }}

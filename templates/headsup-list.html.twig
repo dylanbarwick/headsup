@@ -10,7 +10,7 @@
   <div{{ attributes.removeClass(removedClasses).addClass('headsup-container', item.acknowledged).setAttribute('id', this_id) }}>
     <div class="headsup-title">{{ item.title }}</div>
     <div class="headsup-acknowledgement-status">{{ item.acknowledged }}</div>
-    <div class="headsup-date">{{ item.field_headsup_date }}</div>
+    <div class="headsup-date">{{ item.field_headsup_start_date }}</div>
     <div class="headsup-body">
       {{ item.body|raw }}<br/>
     </div>

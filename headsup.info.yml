@@ -1,6 +1,8 @@
-name: 'Headsup'
+name: Headsup
 type: module
 description: 'Creates and displays headsup notes, memos and operational bulletins.'
 core: 8.x
-core_version_requirement: ^8 || ^9
-package: 'Other'
+core_version_requirement: '^8 || ^9'
+package: Other
+dependencies:
+  - menu_ui

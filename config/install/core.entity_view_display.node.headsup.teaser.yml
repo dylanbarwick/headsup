@@ -4,11 +4,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.headsup.body
-    - field.field.node.headsup.field_headsup_date
     - field.field.node.headsup.field_headsup_recipients
+    - field.field.node.headsup.field_headsup_start_date
+    - field.field.node.headsup.field_headsup_stop_date
     - node.type.headsup
   module:
-    - datetime
     - text
     - user
 id: node.headsup.teaser
@@ -23,13 +23,13 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
-  field_headsup_date:
-    type: datetime_default
-    weight: 2
-    label: above
-    settings:
-      format_type: medium
-      timezone_override: ''
+    region: content
+  links:
+    weight: 100
+    settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   field_headsup_recipients: true
+  field_headsup_start_date: true
+  field_headsup_stop_date: true
