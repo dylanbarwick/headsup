@@ -164,6 +164,8 @@ class HeadsupRepository {
     $query->leftJoin('node__field_headsup_recipients', 'nbr', 'n.nid = nbr.entity_id');
     $query->leftJoin('node__field_headsup_start_date', 'nbd', 'n.nid = nbd.entity_id');
     $query->leftJoin('node__field_headsup_stop_date', 'nbds', 'n.nid = nbds.entity_id');
+    $query->leftJoin('node__field_headsup_priority', 'nbhp', 'n.nid = nbhp.entity_id');
+    $query->leftJoin('taxonomy_term__field_hup_weight', 'thw', 'nbhp.field_headsup_priority_target_id = thw.entity_id');
     $query->leftJoin('headsup_acknowledgements', 'poa', 'n.nid = poa.nid AND poa.uid = :current_user_id', [':current_user_id' => $user->id()]);
 
     // Only bring back headsup nodes.
@@ -173,6 +175,8 @@ class HeadsupRepository {
     $query->addField('nbd', 'entity_id');
     $query->addField('poa', 'nid');
     $query->addField('poa', 'uid');
+    $query->addField('thw', 'field_hup_weight_value');
+    $query->addField('nbd', 'field_headsup_start_date_value');
 
     // A couple of OR conditions grouped.
     $orGroup = $query->orConditionGroup()
@@ -197,6 +201,9 @@ class HeadsupRepository {
       ->isNull('nbds.field_headsup_stop_date_value');
 
     $query->condition($orExpiredGroup);
+
+    $query->orderBy('field_hup_weight_value', 'ASC');
+    $query->orderBy('nbd.field_headsup_start_date_value', 'ASC');
 
     // Return the result in object format.
     $result = $query->execute()->fetchAll(\PDO::FETCH_ASSOC);
