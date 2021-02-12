@@ -93,6 +93,15 @@ class HeadsupBlock extends BlockBase implements ContainerFactoryPluginInterface 
       return NULL;
     }
 
+    // Move all headsups with no `field_headsup_priority` element to the end.
+    foreach ($headsups as $key => $value) {
+      if (!$value->get('field_headsup_priority')->target_id) {
+        $transit = $headsups[$key];
+        unset($headsups[$key]);
+        $headsups[$key] = $transit;
+      }
+    }
+
     // Extract the necessary fields of each headsup and build an array of each.
     foreach ($headsups as $key => $value) {
       $fh_start_date = strtotime($value->get('field_headsup_start_date')->value);
