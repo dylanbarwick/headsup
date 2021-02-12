@@ -5,6 +5,9 @@
  * Install, update and uninstall functions for the headsup module.
  */
 
+use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\Entity\Vocabulary;
+
 /**
  * Implements hook_install().
  *
@@ -50,6 +53,35 @@ function headsup_install() {
   foreach ($entries as $entry) {
     $connection->insert('headsup_acknowledgements')->fields($entry)->execute();
   }
+
+  // Insert some default taxonomy terms into headsup_priority.
+  $term = Term::create([
+    'vid' => 'headsup_priority',
+    'name' => 'High',
+    'field_hup_color' => ['#990000'],
+    'field_hup_weight' => [-6],
+    'field_hup_css_class' => ['high-priority no-messing-about'],
+    'weight' => 0,
+  ]);
+  $term->save();
+  $term = Term::create([
+    'vid' => 'headsup_priority',
+    'name' => 'Medium',
+    'field_hup_color' => ['#009900'],
+    'field_hup_weight' => [-4],
+    'field_hup_css_class' => ['medium-priority ho-hum'],
+    'weight' => 1,
+  ]);
+  $term->save();
+  $term = Term::create([
+    'vid' => 'headsup_priority',
+    'name' => 'Low',
+    'field_hup_color' => ['#000099'],
+    'field_hup_weight' => [0],
+    'field_hup_css_class' => ['low-priority whatever'],
+    'weight' => 2,
+  ]);
+  $term->save();
 }
 
 /**
@@ -59,17 +91,33 @@ function headsup_install() {
  * the content type itself. Scorched earth.
  */
 function headsup_uninstall() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+
   // Delete all nodes of given content type.
-  $storage_handler = \Drupal::entityTypeManager()
+  $storage_handler = $entity_type_manager
     ->getStorage('node');
   $nodes = $storage_handler->loadByProperties(['type' => 'headsup']);
   $storage_handler->delete($nodes);
 
   // Delete content type.
-  $content_type = \Drupal::entityTypeManager()
+  $content_type = $entity_type_manager
     ->getStorage('node_type')
     ->load('headsup');
   $content_type->delete();
+
+  // Delete taxonomy terms in `headsup_priority`.
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'headsup_priority')
+    ->execute();
+
+  $controller = $entity_type_manager->getStorage('taxonomy_term');
+  $entities = $controller->loadMultiple($tids);
+  $controller->delete($entities);
+
+  $vocab = Vocabulary::load('headsup_priority');
+  if (!is_null($vocab)) {
+    $vocab->delete();
+  }
 }
 
 /**

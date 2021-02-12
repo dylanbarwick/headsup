@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Heads-up priority'
+vid: headsup_priority
+description: 'A set of terms to help sort any heads-up notices according to priority.'
+weight: 0

@@ -8,6 +8,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\user\Entity\User;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Url;
 
 /**
@@ -95,11 +96,25 @@ class HeadsupBlock extends BlockBase implements ContainerFactoryPluginInterface 
     // Extract the necessary fields of each headsup and build an array of each.
     foreach ($headsups as $key => $value) {
       $fh_start_date = strtotime($value->get('field_headsup_start_date')->value);
+      $hup_color = NULL;
+      $hup_css_class = NULL;
+      $hup_weight = 0;
+      if ($fh_priority_tid = $value->get('field_headsup_priority')->target_id) {
+        if ($fh_priority = Term::load($fh_priority_tid)) {
+          $hup_color = $fh_priority->get('field_hup_color')->value;
+          $hup_css_class = $fh_priority->get('field_hup_css_class')->value;
+          $hup_weight = $fh_priority->get('field_hup_weight')->value;
+        }
+      }
+
       $render_headsups[$key] = [
         'nid' => $key,
         'title' => $value->title->value,
         'body' => $value->body->value,
         'field_headsup_start_date' => \Drupal::service('date.formatter')->format($fh_start_date, 'short'),
+        'hup_color' => $hup_color,
+        'hup_css_class' => $hup_css_class,
+        'hup_weight' => $hup_weight,
         'this_link' => [
           '#type' => 'link',
           '#title' => $headsup_acknowledge_label,

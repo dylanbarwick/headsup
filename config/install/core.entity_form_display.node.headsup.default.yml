@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.headsup.body
+    - field.field.node.headsup.field_headsup_priority
     - field.field.node.headsup.field_headsup_recipients
     - field.field.node.headsup.field_headsup_start_date
     - field.field.node.headsup.field_headsup_stop_date
@@ -32,20 +33,26 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  field_headsup_priority:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_headsup_recipients:
     type: options_buttons
-    weight: 10
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     region: content
   field_headsup_start_date:
-    weight: 8
+    weight: 7
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_headsup_stop_date:
-    weight: 9
+    weight: 8
     settings: {  }
     third_party_settings: {  }
     type: datetime_default

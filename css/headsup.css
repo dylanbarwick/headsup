@@ -12,6 +12,11 @@
   display: none;
 }
 
+.headsup-color-bar {
+  width: 100%;
+  height: 3px;
+}
+
 .headsup-title {
   font-size: 1.4em;
   font-weight: bold;

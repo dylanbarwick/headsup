@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_hup_css_class
+    - taxonomy.vocabulary.headsup_priority
+id: taxonomy_term.headsup_priority.field_hup_css_class
+field_name: field_hup_css_class
+entity_type: taxonomy_term
+bundle: headsup_priority
+label: 'CSS class'
+description: 'A space-separated list of classes that will be assigned to any heads-up notice with this term applied to it.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
