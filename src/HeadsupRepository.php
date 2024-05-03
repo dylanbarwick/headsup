@@ -3,6 +3,7 @@
 namespace Drupal\headsup;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Query\PagerSelectExtender;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -39,6 +40,11 @@ class HeadsupRepository {
    * @var \Drupal\Core\Database\Connection
    */
   protected $connection;
+
+  /**
+   * The config collection
+   */
+  protected $config;
 
   /**
    * Construct a repository object.
@@ -298,7 +304,9 @@ class HeadsupRepository {
     $query->condition('nbd.field_headsup_start_date_value', date('Y-m-d\TH:i:s'), '<');
 
     // Tack a pager thing on the end.
-    $pager = $query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit($this->config->get('headsup_list_pager_limit'));
+    $pager = $query
+      ->extend(PagerSelectExtender::class)
+      ->limit($this->config->get('headsup_list_pager_limit'));
 
     // Return the result in object format.
     $result = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);

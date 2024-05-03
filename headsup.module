@@ -5,6 +5,7 @@
  * Contains headsup.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -20,6 +21,16 @@ function headsup_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_form_alter
+ */
+function headsup_form_alter ($form, FormStateInterface $form_state) {
+  if (in_array($form['#id'], ['node-headsup-edit-form', 'node-headsup-form'])) {
+    unset($form['field_headsup_recipients']['widget']['#options']['anonymous']);
+    // dump($form['field_headsup_recipients']);
   }
 }
 
